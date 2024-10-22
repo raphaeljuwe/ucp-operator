@@ -1,0 +1,11 @@
+apiVersion: ucp.collabnix.com/v1alpha1
+kind: UCPCluster
+metadata:
+  name: ucpcluster-sample
+spec:
+  nodes: 3
+  dockerVersion: "1.9.1"
+  adminPassword: "your-admin-password"
+  dockerHubUsername: "your-dockerhub-username"
+  dockerHubPassword: "your-dockerhub-password"
+  dockerHubEmail: "your-dockerhub-email"

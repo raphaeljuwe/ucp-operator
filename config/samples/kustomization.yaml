@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- ucp_v1alpha1_ucpcluster.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples

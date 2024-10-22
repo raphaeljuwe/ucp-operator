@@ -1,0 +1,9 @@
+apiVersion: ucp.ucpcluster.com/v1alpha1
+kind: UCPCluster
+metadata:
+  labels:
+    app.kubernetes.io/name: test
+    app.kubernetes.io/managed-by: kustomize
+  name: ucpcluster-sample
+spec:
+  # TODO(user): Add fields here

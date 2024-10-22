@@ -1,0 +1,49 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[]'
+    capabilities: Basic Install
+  name: test.v0.0.0
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - description: UCPCluster is the Schema for the ucpclusters API
+      displayName: UCPCluster
+      kind: UCPCluster
+      name: ucpclusters.ucp.ucpcluster.com
+      version: v1alpha1
+  description: UcpCluster Control Plane
+  displayName: UcpCluster
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      deployments: null
+    strategy: ""
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  links:
+  - name: Test
+    url: https://test.domain
+  maturity: alpha
+  provider:
+    name: UcpCluster Provider
+  version: 0.0.0

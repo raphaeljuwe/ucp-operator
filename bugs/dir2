@@ -1,0 +1,92 @@
+
+make docker-build docker-push IMG=quay.io/rafayeljuwe/ucp-operator:v0.0.1 
+
+operator-sdk create api --group ucp --version v1alpha1 --kind UcpCluster --resource --controller
+
+
+operator-sdk init --domain collabnix.com --repo github.com/yourusername/ucp-operator
+
+
+operator-sdk init --plugins=go.kubebuilder.io/v4 --project-version=0.0.1
+
+  --plugins=go.kubebuilder.io/v4
+
+
+      operator-sdk init --help --plugins=<PLUGIN KEYS> [--project-version=<PROJECT VERSION>]
+
+
+
+{
+operator-sdk create api --group ucp --version v1alpha1 --kind UCPCluster --resource --controller
+
+INFO[0000] Writing kustomize manifests for you to edit... 
+INFO[0000] Writing scaffold for you to edit...          
+INFO[0000] api/v1alpha1/ucpcluster_types.go             
+INFO[0000] api/v1alpha1/groupversion_info.go            
+INFO[0000] internal/controller/suite_test.go            
+INFO[0000] internal/controller/ucpcluster_controller.go 
+INFO[0000] internal/controller/ucpcluster_controller_test.go 
+INFO[0000] Update dependencies:
+$ go mod tidy           
+INFO[0000] Running make:
+$ make generate                
+/Users/raphaeljuwe/Desktop/pass/Openshift/operator-framework/lab/test/bin/controller-gen-v0.14.0 object:headerFile="hack/boilerplate.go.txt" paths="./..."
+Next: implement your new API and generate the manifests (e.g. CRDs,CRs) with:
+$ make manifests
+(base) raphaeljuwe@Mac test % 
+
+}
+
+
+
+make docker-build docker-push IMG=<your-image-repo>/ucp-operator:tag
+
+make deploy IMG=<your-image-repo>/ucp-operator:tag
+
+
+
+apiVersion: ucp.example.com/v1alpha1
+kind: UcpCluster
+metadata:
+  name: example-ucpcluster
+spec:
+  # Add spec fields here
+
+
+kubectl apply -f config/samples/ucp_v1alpha1_ucpcluster.yaml
+
+
++++
+
+
+To create a Kubernetes operator using the Operator SDK based on the Docker Universal Control Plane (UCP) setup described in the article, follow these steps:
+
+    Initialize the operator project:
+
+bash
+operator-sdk init --domain collabnix.com --repo github.com/yourusername/ucp-operator
+cd ucp-operator
+
+    Create a new API and controller:
+
+bash
+operator-sdk create api --group ucp --version v1alpha1 --kind UCPCluster --resource --controller
+
+operator-sdk create api --group ucp --version v1alpha1 --kind UCPCluster --resource --controller
+
+    Define the UCPCluster Custom Resource Definition (CRD) in api/v1alpha1/ucpcluster_types.go:
+
+
+    ++++
+
+
+    make docker-build docker-push IMG=<your-registry>/ucp-operator:v0.1.0
+make deploy IMG=<your-registry>/ucp-operator:v0.1.0
+
+
+
+
+Youtube : Docker Universal Control Plane clusters based on the UCPCluster
+
+
+This Kubernetes operator will manage the lifecycle of Docker Universal Control Plane clusters based on the UCPCluster custom resource. It will handle the installation of Docker, setup of UCP on the primary node, and addition of nodes to the UCP cluster. Note that this is a basic implementation and would require further development to handle all aspects of UCP management, including error handling, updates, and deletion of UCP clusters. Additionally, you may need to implement more sophisticated logic for managing the underlying infrastructure and networking requirements for a production-ready operator.

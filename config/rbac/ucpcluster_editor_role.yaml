@@ -1,0 +1,27 @@
+# permissions for end users to edit ucpclusters.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: test
+    app.kubernetes.io/managed-by: kustomize
+  name: ucpcluster-editor-role
+rules:
+- apiGroups:
+  - ucp.ucpcluster.com
+  resources:
+  - ucpclusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ucp.ucpcluster.com
+  resources:
+  - ucpclusters/status
+  verbs:
+  - get

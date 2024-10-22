@@ -1,0 +1,173 @@
+
+
+
+make bundle IMG=UcpCluster/operator:v0.0.1                                                                    
+
+/Users/raphaeljuwe/Desktop/pass/Openshift/operator-framework/lab/test/bin/controller-gen-v0.14.0 rbac:roleName=manager-role crd webhook paths="./..." output:crd:artifacts:config=config/crd/bases
+Downloading sigs.k8s.io/kustomize/kustomize/v5@v5.3.0
+go: downloading sigs.k8s.io/kustomize/kustomize/v5 v5.3.0
+go: downloading sigs.k8s.io/kustomize/api v0.16.0
+go: downloading sigs.k8s.io/kustomize/cmd/config v0.13.0
+go: downloading sigs.k8s.io/kustomize/kyaml v0.16.0
+go: downloading golang.org/x/text v0.13.0
+go: downloading golang.org/x/exp v0.0.0-20231006140011-7918f672742d
+go: downloading github.com/imdario/mergo v0.3.13
+go: downloading gopkg.in/evanphx/json-patch.v5 v5.6.0
+go: downloading github.com/go-errors/errors v1.4.2
+go: downloading k8s.io/kube-openapi v0.0.0-20230601164746-7562a1006961
+go: downloading github.com/monochromegane/go-gitignore v0.0.0-20200626010858-205db1a8cc00
+go: downloading github.com/xlab/treeprint v1.2.0
+go: downloading google.golang.org/protobuf v1.30.0
+go: downloading github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
+go: downloading go.starlark.net v0.0.0-20200306205701-8dd3e2ee1dd5
+go: downloading github.com/google/go-cmp v0.5.9
+/opt/homebrew/bin/operator-sdk generate kustomize manifests -q
+
+Display name for the operator (required): 
+> UcpCluster
+
+Description for the operator (required): 
+> UcpCluster Control Plane
+
+Provider's name for the operator (required): 
+> UcpCluster Provider
+
+Any relevant URL for the provider name (optional): 
+> 
+
+Comma-separated list of keywords for your operator (required): 
+> get, list, watch, create, update, patch
+
+Comma-separated list of maintainers and their emails (e.g. 'name1:email1, name2:email2') (required): 
+> raphaeljuwe@gmail.com, faynedu@gmail.com
+cd config/manager && /Users/raphaeljuwe/Desktop/pass/Openshift/operator-framework/lab/test/bin/kustomize-v5.3.0 edit set image controller=UcpCluster/operator:v0.0.1
+/Users/raphaeljuwe/Desktop/pass/Openshift/operator-framework/lab/test/bin/kustomize-v5.3.0 build config/manifests | /opt/homebrew/bin/operator-sdk generate bundle -q --overwrite --version 0.0.1  
+# Warning: 'patchesJson6902' is deprecated. Please use 'patches' instead. Run 'kustomize edit fix' to update your Kustomization automatically.
+WARN[0000] ClusterServiceVersion validation: [CSVFileNotValid] (test.v0.0.1) csv.Spec.minKubeVersion is not informed. It is recommended you provide this information. Otherwise, it would mean that your operator project can be distributed and installed in any cluster version available, which is not necessarily the case for all projects. 
+INFO[0000] Creating bundle.Dockerfile                   
+INFO[0000] Creating bundle/metadata/annotations.yaml    
+INFO[0000] Bundle metadata generated successfully       
+/opt/homebrew/bin/operator-sdk bundle validate ./bundle
+WARN[0000] Warning: Value : (test.v0.0.1) csv.Spec.minKubeVersion is not informed. It is recommended you provide this information. Otherwise, it would mean that your operator project can be distributed and installed in any cluster version available, which is not necessarily the case for all projects. 
+INFO[0000] All validation tests have completed successfully 
+(base) raphaeljuwe@Mac test % 
+
+++++
+//restart 
+
+https://developers.redhat.com/articles/2024/01/29/developers-guide-kubernetes-operators#
+
+https://developers.redhat.com/articles/2021/09/07/build-kubernetes-operator-six-steps
+
+https://developers.redhat.com/articles/2021/06/11/kubernetes-operators-101-part-1-overview-and-key-features
+
+
+https://developers.redhat.com/articles/2022/12/21/kubernetes-101-openshift-developers-part-1-components
+
+https://developers.redhat.com/blog/2020/12/16/create-a-kubernetes-operator-in-golang-to-automatically-manage-a-simple-stateful-application
+
+
+++++++++++++++
+{
+	//extending
+
+	The first step is to initialize your project:
+    operator-sdk init [--plugins=<PLUGIN KEYS> [--project-version=<PROJECT VERSION>]]
+
+<PLUGIN KEYS> is a comma-separated list of plugin keys from the following table
+and <PROJECT VERSION> a supported project version for these plugins.
+
+                             Plugin keys | Supported project versions
+-----------------------------------------+----------------------------
+     ansible.sdk.operatorframework.io/v1 |                          3
+        declarative.go.kubebuilder.io/v1 |                       2, 3
+ deploy-image.go.kubebuilder.io/v1-alpha |                          3
+                    go.kubebuilder.io/v2 |                       2, 3
+                    go.kubebuilder.io/v3 |                          3
+                    go.kubebuilder.io/v4 |                          3
+         grafana.kubebuilder.io/v1-alpha |                          3
+        helm.sdk.operatorframework.io/v1 |                          3
+
+
+
+
+
+}
++++++++present step deploy OLM to Openshift++++
+//Using OLM: Create a bundle:
+make bundle IMG=ucpCluster/operator:v0.0.1
+make bundle-build bundle-push BUNDLE_IMG=ucpCluster/operator-bundle:v0.0.1
+
+//Then deploy the operator:
+operator-sdk run bundle UcpCluster/operator-bundle:v0.0.1
+
+//Deploy the operator to your sandbox cluster:
+make deploy IMG=UcpCluster/myoperator:v0.0.1
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+
+//work on this 
+the controller-gen is under the bin folder
+
+CONTROLLER_GEN = $(shell pwd)/bin/controller-gen
+controller-gen:
+    $(call go-get-tool,$(CONTROLLER_GEN),sigs.k8s.io/controller-tools/cmd/controller-gen@v0.8.0)
+
+Adjust the version as needed.
+
+
+}
+
+
+
+{
+	
+//kubebuilder
+
+https://www.youtube.com/watch?v=azJsyLjvHsI&t=1086s&pp=ygULR0tFIGNsdXN0ZXI%3D
+
+
+}
+
+
+
+I need to setup a github repo project using this link
+
+https://collabnix.com/docker-container-management-using-docker-universal-control-plane/
+
+write a kubernetes operator using operator sdk to define the direction
+
+//
+
+Schedular (Kubernetes, Golang)
+Istio, envoy microservices, and Kong api gateway implementation, improved security for internal CaaS services with network policy
+large-scale distributed fault-tolerant middlewares with abstractions, Kubernetes Networking segmentation 
+
+ControlPlane
+Kubernetes operator to manage the lifecycle of Universal Control Plane clusters based on the UCPCluster management, including error handling, updates, and deletion of UCP clusters, with service abstraction for managing the underlying infrastructure and networking requirements for a production-ready operator.
+
+
+
+and Kubernetes Networking design 
+istio...envoy microservices
+
+
+Kubernetes Operator using the Operator SDK for managing Docker containers via the Universal Control Plane.
+adding a controller, implementing the controller logic, building and pushing the operator, Customize the CR and controller to handle specific UCP configurations
+
+ControlPlane
+Kubernetes operator  manage the lifecycle of Docker Universal Control Plane clusters based on the UCPCluster custom resource
+development to handle all aspects of UCP management, including error handling, updates, and deletion of UCP clusters. Additionally, you may need to implement more sophisticated logic for managing the underlying infrastructure and networking requirements for a production-ready operator.
+joining nodes to the UCP, and managing Docker containers.
+
+Developed custom Kubernetes operators to automate complex deployment workflows.
+
+
+ControlPlane
+Kubernetes operator to manage the lifecycle of Universal Control Plane clusters based on the UCPCluster management, including error handling, updates, and deletion of UCP clusters, with service abstraction for managing the underlying infrastructure and networking requirements for a production-ready operator.
+
+custom resource
+development to handle all aspects of UCP management, including error handling, updates, and deletion of UCP clusters. Additionally, you may need to implement more sophisticated logic for managing the underlying infrastructure and networking requirements for a production-ready operator.
+joining nodes to the UCP, and managing Docker containers.

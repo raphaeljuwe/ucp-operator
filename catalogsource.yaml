@@ -1,0 +1,18 @@
+#Deploy the Operator on OpenShift (Local):
+#Create a file named catalogsource.yaml with the following content, replacing <your-operator-image> with the image location (local registry or container registry URL):
+
+apiVersion: operators.coreos.com/v1
+kind: CatalogSource
+metadata:
+  name: dax-catalog-source
+  namespace: rafayeljuwe-dev
+spec:
+  sourceType: grpc
+  displayName: My Operator Catalog
+  image: quay.io/ucpCluster/operator-bundle:v0.0.1 # setup  quay.io account
+  updateStrategy: 
+     registryPoll:
+        interval: 45m
+  channelSpec:
+    - channel: v1.0
+      publisher: your-company 
